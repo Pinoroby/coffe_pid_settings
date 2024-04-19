@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
-/// Flutter code sample for [BottomNavigationBar].
+import 'package:fl_chart/fl_chart.dart';
 
 void main() => runApp(const BottomNavigationBarExampleApp());
 
 class BottomNavigationBarExampleApp extends StatelessWidget {
-  const BottomNavigationBarExampleApp({super.key});
+  const BottomNavigationBarExampleApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
 }
 
 class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+  const BottomNavigationBarExample({Key? key}) : super(key: key);
 
   @override
   State<BottomNavigationBarExample> createState() =>
@@ -27,26 +25,6 @@ class BottomNavigationBarExample extends StatefulWidget {
 class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-     Text(
-      'Index 3: School',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -58,9 +36,8 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-        backgroundColor: Color.fromRGBO(0, 112, 65, 1),
-  
+        title: const Text('Coffee PID Settings'),
+        backgroundColor: const Color.fromRGBO(0, 112, 65, 1),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -81,15 +58,155 @@ class _BottomNavigationBarExampleState
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Setting',
+            label: 'Settings',
           ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Color.fromRGBO(0, 0, 0, 1),
-        unselectedItemColor: Color.fromRGBO(175, 175, 175, 1),
-        
+        selectedItemColor: const Color.fromRGBO(0, 0, 0, 1),
+        unselectedItemColor: const Color.fromRGBO(175, 175, 175, 1),
+      ),
+    );
+  }
 
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: _optionStyle,
+    ),
+     
+    TempScreen(),
+
+    Text(
+      'Index 2: School',
+      style: _optionStyle,
+    ),
+
+    SettingsScreen(), // Index 3: Settings
+  ];
+
+  static const TextStyle _optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+}
+
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  int _numberSetting = 1;
+  bool _boolSetting = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: <Widget>[
+          _buildNumberSetting(),
+          _buildBoolSetting(),
+          // Add more settings widgets here
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNumberSetting() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Number Setting: $_numberSetting',
+          style: const TextStyle(fontSize: 20),
+        ),
+        Slider(
+          value: _numberSetting.toDouble(),
+          min: 1,
+          max: 10,
+          divisions: 9,
+          onChanged: (double value) {
+            setState(() {
+              _numberSetting = value.toInt();
+            });
+          },
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+
+  Widget _buildBoolSetting() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Boolean Setting: $_boolSetting',
+          style: const TextStyle(fontSize: 20),
+        ),
+        Switch(
+          value: _boolSetting,
+          onChanged: (bool value) {
+            setState(() {
+              _boolSetting = value;
+            });
+          },
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+}
+
+class TempScreen extends StatefulWidget {
+  const TempScreen({Key? key}) : super(key: key);
+
+  @override
+  _TempScreenState createState() => _TempScreenState();
+}
+
+class _TempScreenState extends State<TempScreen> {
+  List<FlSpot> _temperatureData = [
+    FlSpot(0, 100), // Temperature at 0 seconds
+    FlSpot(1, 98),  // Temperature at 1 second
+    FlSpot(2, 97),  // Temperature at 2 seconds
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Temperature Plot'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: LineChart(
+          LineChartData(
+            minX: 0,
+            maxX: _temperatureData.length.toDouble() - 1,
+            minY: 0,
+            maxY: 100,
+
+            borderData: FlBorderData(
+              show: true,
+            ),
+            lineBarsData: [
+              LineChartBarData(
+                spots: _temperatureData,
+                isCurved: true,
+                color: Colors.blue,
+                barWidth: 4,
+                isStrokeCapRound: true,
+                belowBarData: BarAreaData(show: false),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
