@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_blue: ^0.8.0
-  f1_chart: ^0.67.0
 
 
   # The following adds the Cupertino Icons font to your application.
