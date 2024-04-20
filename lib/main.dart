@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 void main() => runApp(const BottomNavigationBarExampleApp());
 
@@ -103,18 +104,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: <Widget>[
-          _buildNumberSetting(),
-          _buildBoolSetting(),
-          // Add more settings widgets here
-        ],
-      ),
-    );
+        body: SettingsList(
+      sections: [
+        SettingsSection(
+          tiles: [
+            SettingsTile.navigation(
+              leading: Icon(Icons.bluetooth),
+              title: Text('Bluetooth'),
+            ),
+            SettingsTile.switchTile(
+              title: Text('Dark Mode'),
+              leading: Icon(Icons.dark_mode),
+              onToggle: (bool value) {},
+              initialValue: false,
+            ),
+          ],
+        ),
+      ],
+    ));
   }
 
   Widget _buildNumberSetting() {
