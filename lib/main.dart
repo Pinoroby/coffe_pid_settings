@@ -74,7 +74,7 @@ class _BottomNavigationBarExampleState
       'Index 0: Home',
       style: _optionStyle,
     ),
-     
+
     TempScreen(),
 
     Text(
@@ -173,8 +173,8 @@ class TempScreen extends StatefulWidget {
 class _TempScreenState extends State<TempScreen> {
   List<FlSpot> _temperatureData = [
     FlSpot(0, 100), // Temperature at 0 seconds
-    FlSpot(1, 98),  // Temperature at 1 second
-    FlSpot(2, 97),  // Temperature at 2 seconds
+    FlSpot(1, 98), // Temperature at 1 second
+    FlSpot(2, 97), // Temperature at 2 seconds
   ];
 
   @override
@@ -191,7 +191,6 @@ class _TempScreenState extends State<TempScreen> {
             maxX: _temperatureData.length.toDouble() - 1,
             minY: 0,
             maxY: 100,
-
             borderData: FlBorderData(
               show: true,
             ),
