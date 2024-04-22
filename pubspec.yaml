@@ -45,6 +45,7 @@ dependencies:
   charts_flutter: ^0.12.0
   fl_chart: ^0.67.0
   mqtt_client: ^10.2.1
+  logger: ^2.2.0
 
 dev_dependencies:
   flutter_test:

@@ -6,8 +6,11 @@ import 'package:mqtt_client/mqtt_browser_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'dart:async';
 import 'dart:io';
+import 'mqtt.dart';
 
-client.void main() => runApp(const BottomNavigationBarExampleApp());
+
+final client = MQTTClient("test.mosquitto.org",1883,"")
+void main() => runApp(const BottomNavigationBarExampleApp());
 
 class BottomNavigationBarExampleApp extends StatelessWidget {
   const BottomNavigationBarExampleApp({Key? key}) : super(key: key);
